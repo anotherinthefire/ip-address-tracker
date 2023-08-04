@@ -35,83 +35,112 @@ Users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
+![image](https://github.com/anotherinthefire/ip-address-tracker/assets/107034155/554ed1b6-5759-434d-8888-f7c37c8cc2a0)
 
-Add a screenshot of your solution. The easiest way to do this is to use Firefox to view your project, right-click the page and select "Take a Screenshot". You can choose either a full-height screenshot or a cropped one based on how long the page is. If it's very long, it might be best to crop it.
-
-Alternatively, you can use a tool like [FireShot](https://getfireshot.com/) to take the screenshot. FireShot has a free option, so you don't need to purchase it. 
-
-Then crop/optimize/edit your image however you like, add it to your project, and update the file path in the image above.
-
-**Note: Delete this note and the paragraphs above when you add your screenshot. If you prefer not to add a screenshot, feel free to remove this entire section.**
 
 ### Links
 
 - Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Live Site URL: [Add live site URL here]([https://your-live-site-url.com](https://ip-address-tracker-five-gules.vercel.app/))
 
 ## My process
 
 ### Built with
 
-- Semantic HTML5 markup
-- CSS custom properties
-- Flexbox
-- CSS Grid
-- Mobile-first workflow
-- [React](https://reactjs.org/) - JS library
-- [Next.js](https://nextjs.org/) - React framework
-- [Styled Components](https://styled-components.com/) - For styles
-
-**Note: These are just examples. Delete this note and replace the list above with your own choices**
+[React](https://reactjs.org/) - JavaScript Library
+[Tailwind CSS](https://tailwindcss.com/) - for styling
+[Vite.js](https://vitejs.dev/) - Build tool and development server
+[Axios](https://github.com/axios/axios) - Promise-based HTTP client
+[Leaflet](https://leafletjs.com/) - Interactive maps library
+[React Leaflet](https://react-leaflet.js.org/) - React components for Leaflet maps
+[React Router](https://reactrouter.com/) - Declarative routing for React
+[ESLint](https://eslint.org/) - JavaScript linter tool
 
 ### What I learned
 
-Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
+- How to build responsive and interactive user interfaces using React.
+- Utilizing Tailwind CSS to style components efficiently and maintain a consistent design system.
+- Setting up a fast and efficient development environment with Vite.js.
+- Making API requests and handling responses using Axios.
+- Integrating Leaflet maps into a React application with React Leaflet.
+- Implementing client-side routing for seamless navigation using React Router.
+- How to enforce code quality and best practices with ESLint.
+- How to use .env file
 
-To see how you can add code snippets, see below:
 
-```html
-<h1>Some HTML code I'm proud of</h1>
+```jsx
+  const [address, setAddress] = useState(null);
+  const [ipAddress, setIpAddress] = useState("");
+  const checkIpAddress = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/gi;
+  const checkDomain = /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+/;
+  const apiKey = import.meta.env.VITE_GEO_KEY;
+
+  useEffect(() => {
+    const getInitialData = async () => {
+      try {
+        const res = await axios.get(
+          `https://geo.ipify.org/api/v2/country,city?apiKey=${apiKey}&ipAddress=8.8.8.8`
+        );
+        const data = res.data;
+        setAddress(data);
+      } catch (error) {
+        console.trace(error);
+      }
+    };
+
+    getInitialData();
+  }, []);
+
+  const getEnteredData = async () => {
+    try {
+      const res = await axios.get(
+        `https://geo.ipify.org/api/v2/country,city?apiKey=${apiKey}&${checkIpAddress.test(ipAddress)
+          ? `ipAddress=${ipAddress}`
+          : checkDomain.test(ipAddress)
+            ? `domain=${ipAddress}`
+            : ""}`
+      );
+      const data = res.data;
+      setAddress(data);
+    } catch (error) {
+      console.trace(error);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    getEnteredData();
+    setIpAddress("");
+  };
 ```
-```css
-.proud-of-this-css {
-  color: papayawhip;
+Note: importing env when using vite and cra are different.
+
+Marker Position
+```jsx
+export default function Markerposition({ address }) {
+  const position = useMemo(() => {
+    return [address.location.lat, address.location.lng]
+  }, [address.location.lat, address.location.lng])
+  const map = useMap()
+
+  useEffect(() => {
+    map.flyTo(position, 13, {
+      animate: true,
+    })
+  }, [map, position])
+
+  return (
+    <>
+      <Marker icon={icon} position={position}>
+        <Popup>This is the location of the IP Address or Domain</Popup>
+      </Marker>
+    </>
+  )
 }
 ```
-```js
-const proudOfThisFunc = () => {
-  console.log('🎉')
-}
-```
 
-If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
-
-**Note: Delete this note and the content within this section and replace with your own learnings.**
-
-### Continued development
-
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
-
-**Note: Delete this note and the content within this section and replace with your own plans for continued development.**
-
-### Useful resources
-
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
-
-**Note: Delete this note and replace the list above with resources that helped you during the challenge. These could come in handy for anyone viewing your solution or for yourself when you look back on this project in the future.**
 
 ## Author
 
-- Website - [Add your name here](https://www.your-site.com)
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
-- Twitter - [@yourusername](https://www.twitter.com/yourusername)
-
-**Note: Delete this note and add/remove/edit lines above based on what links you'd like to share.**
-
-## Acknowledgments
-
-This is where you can give a hat tip to anyone who helped you out on this project. Perhaps you worked in a team or got some inspiration from someone else's solution. This is the perfect place to give them some credit.
-
-**Note: Delete this note and edit this section's content as necessary. If you completed this challenge by yourself, feel free to delete this section entirely.**
+- Website - [suntzaur]((https://suntzaur-portfolio.vercel.app/))
+- LinkedIn - [Ron Ultra](https://www.linkedin.com/in/ron-godfrey-ultra-036298241/)
