@@ -35,8 +35,8 @@ function App() {
         `https://geo.ipify.org/api/v2/country,city?apiKey=${apiKey}&${checkIpAddress.test(ipAddress)
           ? `ipAddress=${ipAddress}`
           : checkDomain.test(ipAddress)
-            ? `domain=${ipAddress}`
-            : ""}`
+          ? `domain=${ipAddress}`
+          : ""}`
       );
       const data = res.data;
       setAddress(data);
