@@ -35,21 +35,26 @@ Users should be able to:
 
 
 ### Links
+- Live Site URL: [vercel](ip-address-tracker-five-gules.vercel.app)
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here]([https://your-live-site-url.com](https://ip-address-tracker-five-gules.vercel.app/))
-
-## My process
 
 ### Built with
 
 [React](https://reactjs.org/) - JavaScript Library
+
 [Tailwind CSS](https://tailwindcss.com/) - for styling
+
 [Vite.js](https://vitejs.dev/) - Build tool and development server
+
 [Axios](https://github.com/axios/axios) - Promise-based HTTP client
+
+
 [Leaflet](https://leafletjs.com/) - Interactive maps library
+
 [React Leaflet](https://react-leaflet.js.org/) - React components for Leaflet maps
+
 [React Router](https://reactrouter.com/) - Declarative routing for React
+
 [ESLint](https://eslint.org/) - JavaScript linter tool
 
 ### What I learned
