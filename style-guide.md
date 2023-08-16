@@ -33,5 +33,3 @@ https://geo.ipify.org/
 https://www.frontendmentor.io/challenges/ip-address-tracker-I8-0yYAH0
 
 https://www.youtube.com/watch?v=vidOkPR75qE
-
-https://www.smashingmagazine.com/2023/05/safest-way-hide-api-keys-react/
