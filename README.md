@@ -116,6 +116,8 @@ Users should be able to:
 ```
 Note: importing env when using vite and cra are different.
 
+https://www.smashingmagazine.com/2023/05/safest-way-hide-api-keys-react/
+
 Marker Position
 ```jsx
 export default function Markerposition({ address }) {
